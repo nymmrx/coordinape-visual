@@ -5,17 +5,16 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { argv } = require("process");
 
 const buildPath = path.resolve(__dirname, "dist");
 
-module.exports = (env, arv) => ({
+module.exports = (_, argv) => ({
   // https://webpack.js.org/configuration/devtool/
   devtool: "source-map",
 
   // https://webpack.js.org/concepts/entry-points/#multi-page-application
   entry: {
-    index: ["@babel/polyfill", "./src/index.js"],
+    index: ["@babel/polyfill", "./src/index.js", "./src/index.css"],
   },
 
   // how to write the compiled files to disk
@@ -29,7 +28,7 @@ module.exports = (env, arv) => ({
   devServer: {
     contentBase: path.join(__dirname, "public"),
     compress: true,
-    port: 9000,
+    port: 3000,
   },
 
   module: {
