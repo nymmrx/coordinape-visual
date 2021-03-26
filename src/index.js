@@ -70,7 +70,6 @@ const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
   const svg = d3
     .select("#graph")
     .append("svg")
-    .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", [-width / 2, -height / 2, width, height]);
 
   function render() {
@@ -79,16 +78,21 @@ const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
 
     const chords = chord(matrix);
 
-    svg
-      .append("path")
+    const g = svg.append("g");
+
+    svg.call(d3.zoom().on("zoom", zoomed));
+    function zoomed({ transform }) {
+      g.attr("transform", transform);
+    }
+
+    g.append("path")
       .attr("fill", "none")
       .attr(
         "d",
         d3.arc()({ outerRadius, startAngle: 0, endAngle: 2 * Math.PI })
       );
 
-    svg
-      .append("g")
+    g.append("g")
       .attr("class", "chord")
       .attr("fill-opacity", 0.75)
       .selectAll("g")
@@ -104,8 +108,7 @@ const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius);
           } ${formatValue(d.source.value)}`
       );
 
-    svg
-      .append("g")
+    g.append("g")
       .attr("font-family", "monospace")
       .attr("font-size", 10)
       .attr("fill", "#fff")

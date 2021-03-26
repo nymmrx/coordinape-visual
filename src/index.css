@@ -3,6 +3,16 @@ body {
   line-height: 1.4;
 }
 
+#graph {
+  width: 100vw;
+  height: 100vh;
+}
+
+#graph > svg {
+  width: 100vw;
+  height: 100vh;
+}
+
 fieldset {
   font-size: large;
   margin: 1em;
